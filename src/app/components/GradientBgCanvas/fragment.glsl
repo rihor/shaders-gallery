@@ -1,9 +1,6 @@
 varying vec2 vUv;
-
-float random(vec2 st) {
-  return fract(sin(dot(st.xy, vec2(12.9898, 78.233))) * 43758.5453123);
-}
+varying vec3 vColor;
 
 void main() {
-  gl_FragColor = vec4(vec3(1., 0., 0.), 1.);
+  gl_FragColor = vec4(vColor, 1.);
 }
