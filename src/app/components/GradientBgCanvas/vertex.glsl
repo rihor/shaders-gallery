@@ -91,7 +91,7 @@ void main() {
   float offset = incline * mix(-.25, .25, uv.y);
 
   float noise = snoise(vec3(noiseCoord.x + uTime * uCoordShiftSpeed, noiseCoord.y, uTime * uNoiseSpeed));
-  noise = max(0., noise);
+  noise = max(.0, noise);
   vec3 pos = vec3(position.x, position.y, position.z + noise * uNoiseFreq + tilt + incline + offset);
 
   gl_Position = projectionMatrix * modelViewMatrix * vec4(pos, 1.);
@@ -101,10 +101,16 @@ void main() {
 
   for(int i = 0; i < 4; i++) {
     float noiseFlow = .1 + float(i) * .3;
-    float noiseSpeed = .01 + float(i) * .3;
-    float noiseSeed = .1 + float(i) * 10.;
+    float noiseSpeed = .1 + float(i) * .015;
+    float noiseSeed = 5. + float(i) * 10.;
 
-    float noise = snoise(vec3(noiseCoord.x + uTime * noiseFlow, noiseCoord.y, uTime * noiseSpeed + noiseSeed));
+    vec2 noiseFreq = vec2(.3, .4);
+
+    float noiseFloor = 0.1;
+    float noiseCeil = 0.6 + float(i) * .07;
+
+    // float noise = snoise(vec3(noiseCoord.x * noiseFreq.x + uTime * noiseFlow, noiseCoord.y * noiseFreq.y, uTime * noiseSpeed + noiseSeed));
+    float noise = smoothstep(noiseFloor, noiseCeil, snoise(vec3(noiseCoord.x * noiseFreq.x + uTime * noiseFlow, noiseCoord.y * noiseFreq.y, uTime * noiseSpeed + noiseSeed)));
     vColor = mix(vColor, uColors[i], noise);
   }
 }
