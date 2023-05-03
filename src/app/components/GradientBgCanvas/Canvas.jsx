@@ -8,14 +8,22 @@ import { Euler } from "three";
 export function GradientBgCanvas() {
   const posControls = useControls("camera.pos", {
     x: { value: 0, min: -1, max: 1, step: 0.001 },
-    y: { value: 0, min: -1, max: 1, step: 0.001 },
-    z: { value: 1, min: -1, max: 3, step: 0.001 },
+    y: { value: -0.4, min: -1, max: 1, step: 0.001 },
+    z: { value: 2.35, min: -1, max: 5, step: 0.001 },
   });
 
   const rotationControls = useControls("camera.rotation", {
-    x: { value: 0.67, min: -Math.PI * 2, max: Math.PI * 2, step: 0.001 },
-    y: { value: -0.12, min: -Math.PI * 2, max: Math.PI * 2, step: 0.001 },
-    z: { value: 0.0, min: -Math.PI * 2, max: Math.PI * 2, step: 0.001 },
+    x: { value: 0.19, min: -Math.PI, max: Math.PI, step: 0.001 },
+    y: { value: 0, min: -Math.PI, max: Math.PI, step: 0.001 },
+    z: { value: 0, min: -Math.PI, max: Math.PI, step: 0.001 },
+  });
+
+  const fovControls = useControls("camera.fov", {
+    fov: {
+      value: 50,
+      min: 20,
+      max: 80,
+    },
   });
 
   return (
@@ -24,15 +32,15 @@ export function GradientBgCanvas() {
       <Canvas>
         <PerspectiveCamera
           makeDefault
-          // fov={30}
+          fov={fovControls.fov}
           position={[posControls.x, posControls.y, posControls.z]}
-          // rotation={
-          //   new Euler(
-          //     rotationControls.x,
-          //     rotationControls.y,
-          //     rotationControls.z
-          //   )
-          // }
+          rotation={
+            new Euler(
+              rotationControls.x,
+              rotationControls.y,
+              rotationControls.z
+            )
+          }
         />
         <Plane />
       </Canvas>

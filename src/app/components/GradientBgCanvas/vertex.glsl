@@ -3,11 +3,13 @@ uniform float uNoiseFreq;
 uniform float uNoiseSpeed;
 uniform float uCoordShiftSpeed;
 uniform vec3 uColors[5];
+uniform float uNoiseColorFlowMultiplier;
+uniform float uNoiseColorSpeedMultiplier;
 
 varying vec2 vUv;
 varying vec3 vColor;
 
-//	Simplex 3D Noise 
+//	Simplex 3D Noise
 //	by Ian McEwan, Ashima Arts
 //
 vec4 permute(vec4 x) {
@@ -32,7 +34,7 @@ float snoise(vec3 v) {
   vec3 i1 = min(g.xyz, l.zxy);
   vec3 i2 = max(g.xyz, l.zxy);
 
-  //  x0 = x0 - 0. + 0.0 * C 
+  //  x0 = x0 - 0. + 0.0 * C
   vec3 x1 = x0 - i1 + 1.0 * C.xxx;
   vec3 x2 = x0 - i2 + 2.0 * C.xxx;
   vec3 x3 = x0 - 1. + 3.0 * C.xxx;
@@ -84,10 +86,10 @@ float snoise(vec3 v) {
 }
 
 void main() {
-  vec2 noiseCoord = uv * vec2(3., 4.);
+  vec2 noiseCoord = uv * vec2(3., 5.);
 
   float tilt = -.8 * uv.y;
-  float incline = uv.x * .1;
+  float incline = uv.x * .5;
   float offset = incline * mix(-.25, .25, uv.y);
 
   float noise = snoise(vec3(noiseCoord.x + uTime * uCoordShiftSpeed, noiseCoord.y, uTime * uNoiseSpeed));
@@ -100,16 +102,15 @@ void main() {
   vColor = uColors[4];
 
   for(int i = 0; i < 4; i++) {
-    float noiseFlow = .1 + float(i) * .3;
-    float noiseSpeed = .1 + float(i) * .015;
-    float noiseSeed = 5. + float(i) * 10.;
+    float noiseFlow = .001 + float(i) * uNoiseColorFlowMultiplier;
+    float noiseSpeed = .001 + float(i) * uNoiseColorSpeedMultiplier;
+    float noiseSeed = 8. + float(i) * 10.;
 
     vec2 noiseFreq = vec2(.3, .4);
 
     float noiseFloor = 0.1;
-    float noiseCeil = 0.6 + float(i) * .07;
+    float noiseCeil = 0.5 + float(i) * .07;
 
-    // float noise = snoise(vec3(noiseCoord.x * noiseFreq.x + uTime * noiseFlow, noiseCoord.y * noiseFreq.y, uTime * noiseSpeed + noiseSeed));
     float noise = smoothstep(noiseFloor, noiseCeil, snoise(vec3(noiseCoord.x * noiseFreq.x + uTime * noiseFlow, noiseCoord.y * noiseFreq.y, uTime * noiseSpeed + noiseSeed)));
     vColor = mix(vColor, uColors[i], noise);
   }
