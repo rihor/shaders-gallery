@@ -94,7 +94,7 @@ void main() {
 
   float noise = snoise(vec3(noiseCoord.x + uTime * uCoordShiftSpeed, noiseCoord.y, uTime * uNoiseSpeed));
   noise = max(.0, noise);
-  vec3 pos = vec3(position.x, position.y, position.z + noise * uNoiseFreq + tilt + incline + offset);
+  vec3 pos = vec3(position.x, position.y + noise, position.z + noise * uNoiseFreq + tilt + incline + offset);
 
   gl_Position = projectionMatrix * modelViewMatrix * vec4(pos, 1.);
 

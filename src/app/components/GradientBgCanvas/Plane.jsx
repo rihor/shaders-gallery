@@ -25,7 +25,7 @@ const PlaneShaderMaterial = shaderMaterial(
 extend({ PlaneShaderMaterial });
 
 const randomIndex = Math.floor(Math.random() * niceColors.length);
-let pallete = niceColors[59];
+let pallete = niceColors[67];
 console.log(randomIndex);
 pallete = pallete.map((c) => new Color(c));
 
@@ -35,6 +35,7 @@ export function Plane() {
   const shaderMaterialRef = useRef(null);
   const geometryRef = useRef(null);
   const viewport = useThree((state) => state.viewport);
+  const camera = useThree((state) => state.camera);
 
   useFrame((state, delta) => {
     if (shaderMaterialRef.current?.uniforms) {
@@ -51,7 +52,7 @@ export function Plane() {
     uNoiseFreq: {
       value: 0.65,
       min: 0.001,
-      max: 1,
+      max: 10,
       step: 0.001,
     },
     uNoiseSpeed: {
@@ -61,7 +62,7 @@ export function Plane() {
       step: 0.001,
     },
     uCoordShiftSpeed: {
-      value: 0.05,
+      value: 0.09,
       min: 0.001,
       max: 3,
       step: 0.001,
@@ -83,6 +84,19 @@ export function Plane() {
   useEffect(() => {
     console.log(viewport);
   }, [viewport]);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      console.log("camera", {
+        position: camera.position,
+        rotation: camera.rotation,
+      });
+    }, 1000);
+
+    return () => {
+      clearInterval(interval);
+    };
+  }, [camera]);
 
   return (
     <mesh rotation={new Euler(0, 0, 0.15)}>
