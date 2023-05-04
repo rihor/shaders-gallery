@@ -1,20 +1,15 @@
 "use client";
-import { Canvas, useThree } from "@react-three/fiber";
+import { Canvas } from "@react-three/fiber";
 import { Plane } from "./Plane";
 import { Leva, useControls } from "leva";
-import {
-  CameraControls,
-  OrbitControls,
-  PerspectiveCamera,
-} from "@react-three/drei";
+import { PerspectiveCamera } from "@react-three/drei";
 import { Euler } from "three";
-import { useEffect } from "react";
 
 export function GradientBgCanvas() {
-  const posControls = useControls("camera.pos", {
+  const posControls = useControls("camera.position", {
     x: { value: -0.019786382035342692, min: -4, max: 1, step: 0.001 },
     y: { value: -4.168428655322144, min: -4, max: 1, step: 0.001 },
-    z: { value: 2.3142236318664575, min: -4, max: 5, step: 0.001 },
+    z: { value: 2.3142236318664575, min: 1, max: 8, step: 0.001 },
   });
 
   const rotationControls = useControls("camera.rotation", {

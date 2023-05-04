@@ -102,16 +102,16 @@ void main() {
   vColor = uColors[4];
 
   for(int i = 0; i < 4; i++) {
-    float noiseFlow = .001 + float(i) * uNoiseColorFlowMultiplier;
+    float noiseMovement = .001 + float(i) * uNoiseColorFlowMultiplier; // horizontal movement
     float noiseSpeed = .001 + float(i) * uNoiseColorSpeedMultiplier;
-    float noiseSeed = 8. + float(i) * 10.;
+    float noiseSeed = 8. + float(i) * 10.; // seed to have different position for each color
 
     vec2 noiseFreq = vec2(.3, .4);
 
-    float noiseFloor = 0.1;
-    float noiseCeil = 0.5 + float(i) * .07;
+    float colorNoiseFloor = 0.1; // necessary value on noise to make color appear
+    float noiseCeil = 0.5 + float(i) * .07; // if color noise reach this value then the opacity will be maximized
 
-    float noise = smoothstep(noiseFloor, noiseCeil, snoise(vec3(noiseCoord.x * noiseFreq.x + uTime * noiseFlow, noiseCoord.y * noiseFreq.y, uTime * noiseSpeed + noiseSeed)));
+    float noise = smoothstep(colorNoiseFloor, noiseCeil, snoise(vec3(noiseCoord.x * noiseFreq.x + uTime * noiseMovement, noiseCoord.y * noiseFreq.y, uTime * noiseSpeed + noiseSeed)));
     vColor = mix(vColor, uColors[i], noise);
   }
 }
