@@ -104,7 +104,7 @@ void main() {
   for(int i = 0; i < 4; i++) {
     float noiseMovement = .001 + float(i) * uNoiseColorFlowMultiplier; // horizontal movement
     float noiseSpeed = .001 + float(i) * uNoiseColorSpeedMultiplier;
-    float noiseSeed = 8. + float(i) * 10.; // seed to have different position for each color
+    float noiseSeed = 10. + float(i) * 76.; // seed to have different position for each color
 
     vec2 noiseFreq = vec2(.3, .4);
 
