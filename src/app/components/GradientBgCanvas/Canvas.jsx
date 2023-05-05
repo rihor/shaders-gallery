@@ -1,9 +1,10 @@
 "use client";
 import { Canvas } from "@react-three/fiber";
-import { Plane } from "./Plane";
 import { Leva, useControls } from "leva";
 import { PerspectiveCamera } from "@react-three/drei";
 import { Euler } from "three";
+
+import { Plane } from "./Plane";
 
 export function GradientBgCanvas() {
   const posControls = useControls("camera.position", {
@@ -33,7 +34,7 @@ export function GradientBgCanvas() {
 
   return (
     <div className="absolute top-0 left-0 w-full h-full">
-      <Leva />
+      <Leva collapsed={true} />
       <Canvas>
         <PerspectiveCamera
           far={1000}

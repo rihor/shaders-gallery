@@ -38,7 +38,7 @@ export function Plane() {
 
   const controls = useControls("plane", {
     size: {
-      value: 3,
+      value: 4,
       max: 4,
       min: 1,
     },
