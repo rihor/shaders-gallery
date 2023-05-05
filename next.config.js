@@ -1,7 +1,17 @@
+const basePage = "/lava-lamp";
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   experimental: {
     appDir: true,
+  },
+  // basePath: basePage,
+  redirects: async () => {
+    return [{
+      source: "/",
+      destination: basePage,
+      permanent: false,
+    }]
   },
   webpack: (config) => {
 		config.module.rules.push({
