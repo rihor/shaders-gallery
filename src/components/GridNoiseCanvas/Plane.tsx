@@ -1,3 +1,4 @@
+"use client";
 import * as THREE from "three";
 import { shaderMaterial } from "@react-three/drei";
 import { useThree, useFrame, extend } from "@react-three/fiber";
@@ -27,42 +28,43 @@ export function Plane() {
   const ref = useRef<THREE.ShaderMaterial>(null);
   const viewport = useThree((state) => state.viewport);
 
-  const controls = useControls("noise", {
-    noise: folder({
-      size: {
-        value: 282.35,
-        min: 0,
-        max: 2048,
-        step: 0.001,
-      },
-      opacity: {
-        value: 0.1,
-        min: 0,
-        max: 1,
-        step: 0.001,
-      },
-    }),
-    light: folder({
-      color: "#ed4903",
-      uLightDistortionSpeed: {
+  const noiseControls = useControls("noise", {
+    size: {
+      value: 282.35,
+      min: 0,
+      max: 2048,
+      step: 0.001,
+    },
+    opacity: {
+      value: 0.1,
+      min: 0,
+      max: 1,
+      step: 0.001,
+    },
+  });
+
+  const colorControls = useControls("color", {
+    color: "#ed4903",
+    distortion: folder({
+      speed: {
         value: 0.04,
         min: 0.1,
         max: 1,
         step: 0.01,
       },
-      uLightDistortionStrength: {
+      strength: {
         value: 1,
         min: 0.1,
         max: 10,
         step: 0.01,
       },
-      uLightDistortionWaving: {
+      frequency: {
         value: 9.14,
         min: 0.1,
         max: 25,
         step: 0.001,
       },
-    }),
+    })
   });
 
   useFrame((state, delta) => {
@@ -79,13 +81,13 @@ export function Plane() {
       <bgShaderMaterial
         ref={ref}
         key={BgShaderMaterial.key}
-        uNoiseSize={controls.size}
-        uNoiseOpacity={controls.opacity}
+        uNoiseSize={noiseControls.size}
+        uNoiseOpacity={noiseControls.opacity}
         uAspectRatio={viewport.width / viewport.height}
-        uLightColor={controls.color}
-        uLightDistortionSpeed={controls.uLightDistortionSpeed}
-        uLightDistortionStrength={controls.uLightDistortionStrength}
-        uLightDistortionWaving={controls.uLightDistortionWaving}
+        uLightColor={colorControls.color}
+        uLightDistortionSpeed={colorControls.speed}
+        uLightDistortionStrength={colorControls.strength}
+        uLightDistortionWaving={colorControls.frequency}
       />
     </mesh>
   );

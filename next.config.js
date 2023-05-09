@@ -2,9 +2,10 @@ const basePage = "/lava-lamp";
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  experimental: {
-    appDir: true,
-  },
+  // experimental: {
+  //   appDir: true,
+  // },
+  transpilePackages: ["@react-three/postprocessing"],
   // basePath: basePage,
   redirects: async () => {
     return [{
