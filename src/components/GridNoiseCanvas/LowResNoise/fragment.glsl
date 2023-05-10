@@ -14,7 +14,7 @@ void mainImage(const in vec4 inputColor, const in vec2 uv, out vec4 outputColor)
 	// Make noise with a lower resolution
   vec2 lowResUv = vec2((floor(squareUv.x * uNoiseSize) / uNoiseSize), (floor(squareUv.y * uNoiseSize) / uNoiseSize));
   lowResUv = mod(lowResUv, vec2(1.)); // Repeat to fill screen
-  float noise = clamp(random(sin(lowResUv + mod(uTime, 10.))), uNoiseOpacity, 1.);
+  float noise = clamp(random(sin(lowResUv + mod(uTime, 10.))), 0., uNoiseOpacity);
 
   outputColor = vec4(vec3(noise), inputColor.a);
 }
