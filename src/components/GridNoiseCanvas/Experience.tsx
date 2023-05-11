@@ -17,15 +17,9 @@ export function Experience() {
 
   useEffect(() => {
     if (ref.current) {
-      console.log('ref', ref.current);
       (ref.current as unknown as BloomEffect).intensity = 0.5;
     }
   }, [ref])
-
-  useEffect(() => {
-    if (noiseRef.current) {
-    }
-  }, [noiseRef])
 
   const noiseControls = useControls("noise", {
     size: {
