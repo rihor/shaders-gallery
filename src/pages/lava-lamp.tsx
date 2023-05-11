@@ -1,4 +1,5 @@
 import dynamic from "next/dynamic";
+import Head from "next/head";
 import RootLayout from "~/components/Layout";
 
 const GradientBgCanvas = dynamic(
@@ -8,6 +9,10 @@ const GradientBgCanvas = dynamic(
 export default function LavaLampPage() {
   return (
     <RootLayout>
+      <Head>
+        <title>Lava Lamp</title>
+      </Head>
+
       <main className="flex relative h-full">
         <GradientBgCanvas />
       </main>

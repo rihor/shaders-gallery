@@ -14,7 +14,7 @@ export default function RootLayout({
     <div className={classNames('flex flex-col h-full', inter.variable)}>
       <nav className="h-6 p-4 flex items-center gap-6 filter backdrop-blur-xl">
         <Link href={"/lava-lamp"}>lava lamp</Link>
-        <Link href={"/grid-noise"}>grid noise</Link>
+        <Link href={"/neon"}>neon</Link>
       </nav>
       {children}
     </div>

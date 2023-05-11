@@ -6,6 +6,7 @@ import { useGLTF } from "@react-three/drei";
 
 interface Props {
   color: string;
+  intensity: number;
 }
 
 export function Model(props: Props) {
@@ -20,7 +21,7 @@ export function Model(props: Props) {
           geometry={gltf.nodes.default_1.geometry}
           material={gltf.materials["None.003"]}
         >
-          <Material color={props.color} />
+          <Material color={props.color} emissiveIntensity={props.intensity} />
         </mesh>
         <mesh
           castShadow
@@ -28,19 +29,24 @@ export function Model(props: Props) {
           geometry={gltf.nodes.default_2.geometry}
           material={gltf.materials["None.002"]}
         >
-          <Material color={props.color} />
+          <Material color={props.color} emissiveIntensity={props.intensity} />
         </mesh>
       </group>
     </group>
   );
 }
 
-function Material(props: { color: string }) {
+interface MaterialProps {
+  color: string;
+  emissiveIntensity: number;
+}
+
+function Material(props: MaterialProps) {
   return (
     <meshStandardMaterial
       attach="material"
       emissive={props.color}
-      emissiveIntensity={30.}
+      emissiveIntensity={props.emissiveIntensity}
       color={props.color}
       wireframe
       toneMapped={false}

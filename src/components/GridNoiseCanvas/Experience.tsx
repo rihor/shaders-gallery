@@ -39,6 +39,11 @@ export function Experience() {
   const modelControls = useControls("model", {
     color: {
       value: "#8cbe79"
+    },
+    intensity: {
+      value: 30,
+      min: 1,
+      max: 100,
     }
   });
 
@@ -70,7 +75,7 @@ export function Experience() {
 
       <ambientLight args={["#fff", 1.]} />
 
-      <Model color={modelControls.color} />
+      <Model color={modelControls.color} intensity={modelControls.intensity} />
 
       <OrbitControls />
     </>
