@@ -37,7 +37,7 @@ export function GradientBgCanvas() {
       <Leva collapsed={true} />
       <Canvas>
         <PerspectiveCamera
-          far={1000}
+          far={55}
           makeDefault
           fov={fovControls.fov}
           position={[posControls.x, posControls.y, posControls.z]}
