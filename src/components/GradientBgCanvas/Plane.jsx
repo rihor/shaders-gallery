@@ -5,6 +5,7 @@ import { useControls } from "leva";
 import niceColors from "nice-color-palettes";
 import { Color, Euler } from "three";
 
+import { normalizeInRange } from "../../helpers/math";
 import vertexShader from "./vertex.glsl";
 import fragmentShader from "./fragment.glsl";
 
@@ -38,8 +39,8 @@ export function Plane() {
 
   const controls = useControls("plane", {
     size: {
-      value: 4,
-      max: 4,
+      value: 10,
+      max: 25,
       min: 1,
     },
   });
@@ -89,14 +90,26 @@ export function Plane() {
     },
   });
 
+  // normalize width between min and max values
+  const minSizeValue = 2;
+  const maxSizeValue = 4;
+  let normalizedWidthInRange = normalizeInRange(
+    viewport.width * viewport.factor,
+    400,
+    2560,
+    2,
+    4
+  );
+  normalizedWidthInRange = maxSizeValue + minSizeValue - normalizedWidthInRange; // invert normalized value in range
+
   return (
     <mesh rotation={new Euler(0, 0, 0.15)}>
       <planeGeometry
         args={[
-          0.5 + controls.size * viewport.width,
-          0.5 + controls.size * viewport.width,
-          200,
-          200,
+          controls.size + normalizedWidthInRange * (viewport.width / 2),
+          controls.size + normalizedWidthInRange * (viewport.width / 2),
+          300,
+          300,
         ]}
         ref={geometryRef}
       />
